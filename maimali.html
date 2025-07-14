@@ -1,266 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MALIMALI ENTERPRISE</title>
+
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
       color: #333;
+      overflow-x: hidden;
     }
+
     header, footer {
       background-color: #005c99;
       color: white;
       text-align: center;
-      padding: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
+    header h1 {
+      font-size: 3rem;
+    }
+
     nav {
       background-color: #003d66;
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      padding: 0.5rem;
+      gap: 1.5rem;
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
     nav a {
       color: white;
       text-decoration: none;
       font-weight: bold;
+      padding: 0.5rem;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
+
     section {
-      padding: 2rem;
+      padding: 3rem 2rem;
     }
+
     #filters button {
       margin-right: 0.5rem;
       margin-bottom: 1rem;
       background: #007acc;
       color: white;
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.7rem 1.5rem;
       cursor: pointer;
       border-radius: 4px;
+      transition: background-color 0.3s ease;
     }
+
+    #filters button:hover {
+      background-color: #005c99;
+    }
+
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+      justify-content: center;
     }
+
     .product {
       background: white;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 1rem;
-      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
     }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
     .product img {
       max-width: 100%;
       height: auto;
+      transition: transform 0.3s ease;
     }
+
+    .product img:hover {
+      transform: scale(1.1);
+    }
+
+    .product h3 {
+      font-size: 1.2rem;
+      color: #005c99;
+    }
+
     .product button {
       background-color: #005c99;
       color: white;
-      padding: 0.5rem;
+      padding: 1rem;
       border: none;
-      margin-top: 0.5rem;
       width: 100%;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
+
+    .product button:hover {
+      background-color: #003d66;
+    }
+
     #pagination {
       text-align: center;
-      margin-top: 1rem;
+      margin-top: 2rem;
     }
+
     #pagination button {
-      margin: 0.2rem;
-      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      padding: 0.8rem 1.5rem;
       border: none;
       background: #ccc;
       cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
     }
+
     #pagination button.active {
       background-color: #005c99;
       color: white;
     }
+
+    #pagination button:hover {
+      background-color: #007acc;
+    }
+
+    #search {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      transition: border-color 0.3s ease;
+    }
+
+    #search:focus {
+      outline: none;
+      border-color: #005c99;
+    }
   </style>
 </head>
+
 <body>
 
-<header>
-  <h1>MALIMALI ENTERPRISE</h1>
-  <p>Empowering Growth, Driving Innovation</p>
-</header>
+  <header>
+    <h1>MALIMALI ENTERPRISE</h1>
+    <p>Empowering Growth, Driving Innovation</p>
+  </header>
 
-<nav>
-  <a href="#about">About</a>
-  <a href="#shop">Shop</a>
-  <a href="#contact">Contact</a>
-  <a href="#" onclick="viewCart()">🛒 Cart</a>
-</nav>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#shop">Shop</a>
+    <a href="#contact">Contact</a>
+    <a href="#" onclick="viewCart()">🛒 Cart (0)</a>
+  </nav>
 
-<section id="about">
-  <h2>About Us</h2>
-  <p>Welcome to MALIMALI ENTERPRISE, your trusted partner in affordable goods and local supply.</p>
-</section>
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Welcome to MALIMALI ENTERPRISE, your trusted partner in affordable goods and local supply.</p>
+  </section>
 
-<section id="shop">
-  <h2>Shop Products</h2>
-  <input type="text" id="search" placeholder="Search products..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;">
+  <section id="shop">
+    <h2>Shop Products</h2>
+    <input type="text" id="search" placeholder="Search products...">
 
-  <div id="filters">
-    <button onclick="filterProducts('all')">All</button>
-    <button onclick="filterProducts('food')">Food</button>
-    <button onclick="filterProducts('dairy')">Dairy</button>
-    <button onclick="filterProducts('beverages')">Beverages</button>
-    <button onclick="filterProducts('detergents')">Detergents</button>
-    <button onclick="filterProducts('home')">Home</button>
-    <button onclick="filterProducts('fashion')">Fashion</button>
-    <button onclick="filterProducts('spices')">Spices</button>
-    <button onclick="filterProducts('baking')">Baking</button>
-  </div>
+    <div id="filters">
+      <button onclick="filterProducts('all')">All</button>
+      <button onclick="filterProducts('food')">Food</button>
+      <button onclick="filterProducts('dairy')">Dairy</button>
+      <button onclick="filterProducts('beverages')">Beverages</button>
+      <button onclick="filterProducts('detergents')">Detergents</button>
+      <button onclick="filterProducts('home')">Home</button>
+      <button onclick="filterProducts('fashion')">Fashion</button>
+      <button onclick="filterProducts('spices')">Spices</button>
+      <button onclick="filterProducts('baking')">Baking</button>
+    </div>
 
-  <div id="product-grid" class="products-grid"></div>
-  <div id="pagination"></div>
-</section>
+    <div id="product-grid" class="products-grid"></div>
+    <div id="pagination"></div>
+  </section>
 
-<section id="contact">
-  <h2>Contact Us</h2>
-  <p>Email: info@malimali.com</p>
-  <p>Phone: +254 712 345678</p>
-  <p>Location: Kobujoi, Aldai, Nandi County, Kenya</p>
-</section>
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: info@malimali.com</p>
+    <p>Phone: +254 712 345678</p>
+    <p>Location: Kobujoi, Aldai, Nandi County, Kenya</p>
+  </section>
 
-<footer>
-  <p>2025 MALIMALI ENTERPRISE. All rights reserved.</p>
-</footer>
-<script>
-const allProducts = [
-  { title: "Exe All Purpose Wheat Flour 2kg", price: 167, category: "food" },
-  { title: "Rinsun Sunflower Oil 20L", price: 6107, category: "food" },
-  { title: "Kericho Gold Tea Bags (20's)", price: 241, category: "beverages" },
-  { title: "Coca Cola Original Can 330ml", price: 92, category: "beverages" },
-  { title: "Velvex Dishwashing Liquid 5L", price: 492, category: "detergents" },
-  { title: "Jik Bleach Regular 1.5L", price: 762, category: "detergents" },
-  { title: "Domee Apricot Halves In Syrup 425g", price: 255, category: "food" },
-  { title: "Kabras Sugar 2kg", price: 362, category: "food" },
-  { title: "Brookside Unsalted Butter 500g", price: 813, category: "dairy" },
-  { title: "Dormans Instant Fine Coffee 200g", price: 1387, category: "beverages" },
-  { title: "Kericho Gold Loose Tea 500g", price: 384, category: "beverages" },
-  { title: "Dormans Creamer 4g (36 Pcs)", price: 603, category: "beverages" },
-  { title: "Nuziwa Oat Milk Original 1L", price: 420, category: "dairy" },
-  { title: "Tropical Heat Tea Masala 100g", price: 262, category: "spices" },
-  { title: "Pick N Peel Juice Orange 1L", price: 350, category: "beverages" },
-  { title: "Mayers Sparkling Water Glass 750ml", price: 176, category: "beverages" },
-  { title: "Sunlight Hand Washing Powder 1Kg", price: 340, category: "detergents" },
-  { title: "Velvex Toilet Cleaner Ocean Breeze 1L", price: 411, category: "detergents" },
-  { title: "Zesta Icing Sugar 15Kg", price: 3219, category: "baking" },
-  { title: "Brookside Cheese Mozzarella 250g", price: 560, category: "dairy" },
-  { title: "Kamukunji Shoes (assorted)", price: 1800, category: "fashion" },
-  { title: "Kamukunji Carpets", price: 5000, category: "home" },
-  { title: "Kamukunji Duvets", price: 3500, category: "home" },
-  { title: "Kamukunji Curtains", price: 3000, category: "home" },
-  { title: "Zesta Tomato Sauce 500g", price: 180, category: "food" },
-  { title: "Kenylon Baked Beans 420g", price: 158, category: "food" },
-  { title: "Krackles Potato Crisps 30g", price: 51, category: "food" },
-  { title: "Dasani Water 1L", price: 80, category: "beverages" },
-  { title: "Aquafina Water 1.5L", price: 115, category: "beverages" },
-  { title: "Kamukunji Iron Boxes", price: 1800, category: "home" },
-  { title: "Kamukunji Thermos Flasks", price: 1200, category: "home" },
-  { title: "Ajab Baking Flour 2kg", price: 165, category: "food" },
-  { title: "Ndovu Maize Flour 2kg", price: 145, category: "food" },
-  { title: "Minute Maid Juice Mango 1L", price: 290, category: "beverages" },
-  { title: "Fanta Orange PET Bottle 2L", price: 180, category: "beverages" },
-  { title: "Sprite PET Bottle 1L", price: 140, category: "beverages" },
-  { title: "Brookside Fresh Milk 500ml", price: 65, category: "dairy" },
-  { title: "Daima Yogurt Mango 250ml", price: 80, category: "dairy" },
-  { title: "Kamukunji Water Dispensers", price: 6000, category: "home" },
-  { title: "Kamukunji Wall Mirrors", price: 3000, category: "home" }
-  // Add more here if needed
-];
+  <footer>
+    <p>2025 MALIMALI ENTERPRISE. All rights reserved.</p>
+  </footer>
 
-let filteredProducts = [...allProducts];
-const productsPerPage = 12;
-let currentPage = 1;
+  <script>
+    const allProducts = [
+      { title: "Exe All Purpose Wheat Flour 2kg", price: 167, category: "food" },
+      { title: "Rinsun Sunflower Oil 20L", price: 6107, category: "food" },
+      { title: "Kericho Gold Tea Bags (20's)", price: 241, category: "beverages" },
+      { title: "Coca Cola Original Can 330ml", price: 92, category: "beverages" },
+      { title: "Velvex Dishwashing Liquid 5L", price: 492, category: "detergents" },
+      { title: "Jik Bleach Regular 1.5L", price: 762, category: "detergents" },
+      { title: "Domee Apricot Halves In Syrup 425g", price: 255, category: "food" },
+      { title: "Kabras Sugar 2kg", price: 362, category: "food" },
+      { title: "Brookside Unsalted Butter 500g", price: 813, category: "dairy" },
+      { title: "Dormans Instant Fine Coffee 200g", price: 1387, category: "beverages" },
+      { title: "Kericho Gold Loose Tea 500g", price: 384, category: "beverages" },
+      { title: "Dormans Creamer 4g (36 Pcs)", price: 603, category: "beverages" },
+      { title: "Nuziwa Oat Milk Original 1L", price: 420, category: "dairy" },
+      { title: "Tropical Heat Tea Masala 100g", price: 262, category: "spices" },
+      { title: "Pick N Peel Juice Orange 1L", price: 350, category: "beverages" },
+      { title: "Mayers Sparkling Water Glass 750ml", price: 176, category: "beverages" },
+      { title: "Sunlight Hand Washing Powder 1Kg", price: 340, category: "detergents" },
+      { title: "Velvex Toilet Cleaner Ocean Breeze 1L", price: 411, category: "detergents" },
+      { title: "Zesta Icing Sugar 15Kg", price: 3219, category: "baking" },
+      { title: "Brookside Cheese Mozzarella 250g", price: 560, category: "dairy" },
+      { title: "Kamukunji Shoes (assorted)", price: 1800, category: "fashion" },
+      { title: "Kamukunji Carpets", price: 5000, category: "home" },
+      { title: "Kamukunji Duvets", price: 3500, category: "home" },
+      { title: "Kamukunji Curtains", price: 3000, category: "home" },
+      { title: "Zesta Tomato Sauce 500g", price: 180, category: "food" },
+      { title: "Kenylon Baked Beans 420g", price: 158, category: "food" },
+      { title: "Krackles Potato Crisps 30g", price: 51, category: "food" },
+      { title: "Dasani Water 1L", price: 80, category: "beverages" },
+      { title: "Aquafina Water 1.5L", price: 115, category: "beverages" },
+      { title: "Kamukunji Iron Boxes", price: 1800, category: "home" },
+      { title: "Kamukunji Thermos Flasks", price: 1300, category: "home" },
+    ];
 
-function displayProducts() {
-  const grid = document.getElementById('product-grid');
-  grid.innerHTML = '';
-  const start = (currentPage - 1) * productsPerPage;
-  const end = start + productsPerPage;
-  const current = filteredProducts.slice(start, end);
+    let filteredProducts = [...allProducts];
+    const productsPerPage = 12;
+    let currentPage = 1;
 
-  current.forEach(p => {
-    const div = document.createElement('div');
-    div.className = 'product';
-    div.innerHTML = `
-      <img src="https://via.placeholder.com/200?text=${encodeURIComponent(p.title)}" alt="${p.title}">
-      <h3>${p.title}</h3>
-      <p>Ksh ${p.price.toLocaleString()}</p>
-      <button onclick="addToCart('${p.title}', ${p.price})">Add to Cart</button>
-    `;
-    grid.appendChild(div);
-  });
+    function displayProducts() {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+      const start = (currentPage - 1) * productsPerPage;
+      const end = start + productsPerPage;
+      const current = filteredProducts.slice(start, end);
 
-  displayPagination();
-}
+      current.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'product';
+        div.innerHTML = `
+          <img src="https://via.placeholder.com/200?text=${encodeURIComponent(p.title)}" alt="${p.title}">
+          <h3>${p.title}</h3>
+          <p>Ksh ${p.price.toLocaleString()}</p>
+          <button onclick="addToCart('${p.title}', ${p.price})">Add to Cart</button>
+        `;
+        grid.appendChild(div);
+      });
 
-function filterProducts(category) {
-  if (category === 'all') {
-    filteredProducts = [...allProducts];
-  } else {
-    filteredProducts = allProducts.filter(p => p.category === category);
-  }
-  currentPage = 1;
-  displayProducts();
-}
+      displayPagination();
+    }
 
-function addToCart(name, price) {
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.push({ name, price });
-  localStorage.setItem('cart', JSON.stringify(cart));
-  alert(`${name} added to cart`);
-}
-
-function viewCart() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  if (cart.length === 0) {
-    alert("Cart is empty.");
-    return;
-  }
-  let summary = "Items in Cart:\n";
-  cart.forEach((item, index) => {
-    summary += `${index + 1}. ${item.name} - Ksh ${item.price}\n`;
-  });
-  alert(summary);
-}
-
-function displayPagination() {
-  const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
-  const pagination = document.getElementById('pagination');
-  pagination.innerHTML = '';
-
-  for (let i = 1; i <= pageCount; i++) {
-    const btn = document.createElement('button');
-    btn.textContent = i;
-    btn.className = i === currentPage ? 'active' : '';
-    btn.onclick = () => {
-      currentPage = i;
+    function filterProducts(category) {
+      if (category === 'all') {
+        filteredProducts = [...allProducts];
+      } else {
+        filteredProducts = allProducts.filter(p => p.category === category);
+      }
+      currentPage = 1;
       displayProducts();
-    };
-    pagination.appendChild(btn);
-  }
-}
+    }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById('search').addEventListener('input', function () {
-    const term = this.value.toLowerCase();
-    filteredProducts = allProducts.filter(p => p.title.toLowerCase().includes(term));
-    currentPage = 1;
-    displayProducts();
-  });
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ name, price });
+      localStorage.setItem('cart', JSON.stringify(cart));
 
-  displayProducts();
-});
-</script>
+      updateCartCount();
+      alert(`${name} added to cart`);
+    }
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartCount = cart.length;
+      document.querySelector('a[onclick="viewCart()"]').innerHTML = `🛒 Cart (${cartCount})`;
+    }
+
+    function viewCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        alert("Cart is empty.");
+        return;
+      }
+      let summary = "Items in Cart:\n";
+      cart.forEach((item, index) => {
+        summary += `${index + 1}. ${item.name} - Ksh ${item.price}\n`;
+      });
+      alert(summary);
+    }
+
+    function displayPagination() {
+      const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      for (let i = 1; i <= pageCount; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = i === currentPage ? 'active' : '';
+        btn.onclick = () => {
+          currentPage = i;
+          displayProducts();
+        };
+        pagination.appendChild(btn);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCartCount(); // Initialize cart count
+
+      document.getElementById('search').addEventListener('input', function () {
+        const term = this.value.toLowerCase();
+        filteredProducts = allProducts.filter(p => p.title.toLowerCase().includes(term));
+        currentPage = 1;
+        displayProducts();
+      });
+
+      displayProducts();
+    });
+  </script>
+</body>
+
+</html>
